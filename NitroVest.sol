@@ -66,14 +66,13 @@ contract RealEstateMarketplace {
         uint256 _areaInSqFt,
         uint256 _listingPrice,
         uint256 _totalTokens,
-        uint256 _tokenPrice,
         bool _allowPartial
     ) external {
-        require(_totalTokens > 0, "tokens tokens");
-        require(_tokenPrice > 0, "zero price");
+        require(_totalTokens > 0, "zero tokens");
 
         // Create a new ERC721 token for the property
         CustomNFT newNFT = new CustomNFT("PropertyToken", "PTK");
+        uint256 tokenPrice_ = _listingPrice / _totalTokens;
         properties.push(
             Property({
                 details: _details,
@@ -81,7 +80,7 @@ contract RealEstateMarketplace {
                 owner: msg.sender,
                 listingPrice: _listingPrice,
                 totalTokens: _totalTokens,
-                tokenPrice: _tokenPrice,
+                tokenPrice: tokenPrice_,
                 tokensSold: 0,
                 nft: newNFT,
                 equity: _listingPrice,
